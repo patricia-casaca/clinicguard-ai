@@ -2,8 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @layer base {
-  body {
-    @apply bg-white text-gray-900;
+/* ===== Custom styles ===== */
+
+/* html {
+  scroll-behavior: smooth;
+}
+
+.dropdown-enter {
+  animation: dropdownSlide 0.2s ease forwards;
+}
+
+@keyframes dropdownSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} */
+
+/* body {
+  background: red !important;
 } */

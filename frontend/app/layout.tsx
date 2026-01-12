@@ -1,5 +1,6 @@
 import "./globals.css";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "ClinicGuard AI",
@@ -16,6 +17,7 @@ export default function RootLayout({
       <body className="bg-gray-50 text-gray-900">
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );

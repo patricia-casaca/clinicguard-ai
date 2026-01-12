@@ -5,6 +5,28 @@ import { useState } from "react";
 export default function UploadPage() {
   const [files, setFiles] = useState<File[]>([]);
 
+  // Dummy existing documents
+  const existingDocs = [
+    {
+      id: 1,
+      name: "Clinic Policy Manual.pdf",
+      uploadedAt: "Jan 10, 2026",
+      status: "Scanned",
+    },
+    {
+      id: 2,
+      name: "Patient Privacy Guidelines.docx",
+      uploadedAt: "Jan 9, 2026",
+      status: "Pending",
+    },
+    {
+      id: 3,
+      name: "Staff Training Procedures.pdf",
+      uploadedAt: "Jan 5, 2026",
+      status: "Scanned",
+    },
+  ];
+
   const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     setFiles([...files, ...Array.from(e.target.files)]);
@@ -69,6 +91,29 @@ export default function UploadPage() {
             </ul>
           </div>
         )}
+
+        {/* Existing Documents */}
+        <div className="mt-16">
+          <h2 className="text-sm font-semibold text-gray-900 mb-3">
+            Previously Uploaded Documents
+          </h2>
+          <div className="bg-gray-50 border border-gray-200 rounded-xl divide-y">
+            {existingDocs.map((doc) => (
+              <div
+                key={doc.id}
+                className="flex justify-between items-center px-4 py-3 text-sm"
+              >
+                <div>
+                  <div className="text-gray-800 font-medium">{doc.name}</div>
+                  <div className="text-gray-400 text-xs">
+                    Uploaded {doc.uploadedAt}
+                  </div>
+                </div>
+                <span className="text-xs text-gray-500">{doc.status}</span>
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* CTA Button */}
         <button

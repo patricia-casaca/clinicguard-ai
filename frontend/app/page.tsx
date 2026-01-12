@@ -4,98 +4,97 @@
 
 // export default function Home() {
 //   return (
-//     <div className="min-h-screen bg-gray-50">
+//     <div className="min-h-screen bg-white">
 //       {/* Hero Section */}
-//       <section className="bg-white shadow-sm">
-//         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-//           <h1 className="text-4xl sm:text-5xl font-bold text-blue-600 mb-4">
-//             🏥 ClinicGuard AI
+//       <section className="border-b border-gray-200">
+//         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+//           <h1 className="text-4xl sm:text-5xl font-semibold text-gray-900 mb-4 tracking-tight">
+//             ClinicGuard AI
 //           </h1>
-//           <p className="text-gray-700 text-lg sm:text-xl mb-8">
-//             Your 24/7 AI Compliance Officer for small clinics.
+//           <p className="max-w-2xl mx-auto text-gray-600 text-lg sm:text-xl mb-10">
+//             An AI-powered compliance platform that helps small clinics stay
+//             audit-ready, reduce risk, and save time.
 //           </p>
+
 //           <div className="flex justify-center gap-4">
 //             <Link
 //               href="/upload"
-//               className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+//               className="px-7 py-3 bg-[#3B82A0] text-white font-medium rounded-lg hover:bg-[#256B85] transition-colors"
 //             >
-//               Upload Docs
+//               Upload Documents
 //             </Link>
 //             <Link
 //               href="/scan"
-//               className="px-6 py-3 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-colors"
+//               className="px-7 py-3 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-colors"
 //             >
-//               See Dashboard
+//               View Dashboard
 //             </Link>
 //           </div>
 //         </div>
 //       </section>
 
 //       {/* Features Section */}
-//       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-//         <h2 className="text-3xl font-bold text-gray-800 text-center mb-12">
-//           What ClinicGuard AI Can Do
+//       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+//         <h2 className="text-3xl font-semibold text-gray-900 text-center mb-14">
+//           Built for Clinic Compliance
 //         </h2>
+
 //         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-//           <div className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
-//             <h3 className="text-xl font-semibold mb-2">
-//               📄 Document Upload & Scan
-//             </h3>
-//             <p className="text-gray-600 text-sm">
-//               Upload your clinic policies & procedures. Get instant compliance
-//               scoring.
-//             </p>
-//           </div>
-
-//           <div className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
-//             <h3 className="text-xl font-semibold mb-2">💬 HIPAA Q&A Chat</h3>
-//             <p className="text-gray-600 text-sm">
-//               Ask questions like “Can I email this patient?” and get clear, safe
-//               answers.
-//             </p>
-//           </div>
-
-//           <div className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
-//             <h3 className="text-xl font-semibold mb-2">
-//               📊 Audit-Ready Reports
-//             </h3>
-//             <p className="text-gray-600 text-sm">
-//               One-click reports to stay prepared for audits. Show top risks &
-//               missing documents.
-//             </p>
-//           </div>
-
-//           <div className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
-//             <h3 className="text-xl font-semibold mb-2">⚠️ Red Flag Alerts</h3>
-//             <p className="text-gray-600 text-sm">
-//               Get notified about high-risk gaps and compliance issues before
-//               they become fines.
-//             </p>
-//           </div>
+//           {[
+//             {
+//               title: "Document Intake & Analysis",
+//               desc: "Upload clinic policies and procedures to receive automated compliance scoring and gap detection.",
+//             },
+//             {
+//               title: "HIPAA-Safe Q&A",
+//               desc: "Ask compliance questions in plain language and receive clear, defensible answers.",
+//             },
+//             {
+//               title: "Audit-Ready Reports",
+//               desc: "Generate structured reports highlighting risks, missing documentation, and priority fixes.",
+//             },
+//             {
+//               title: "Risk Alerts",
+//               desc: "Surface high-risk compliance issues early—before they become audit findings or fines.",
+//             },
+//           ].map((item) => (
+//             <div
+//               key={item.title}
+//               className="bg-white p-6 rounded-xl border border-gray-200 hover:shadow-sm transition"
+//             >
+//               <h3 className="text-base font-semibold text-gray-900 mb-2">
+//                 {item.title}
+//               </h3>
+//               <p className="text-sm text-gray-600 leading-relaxed">
+//                 {item.desc}
+//               </p>
+//             </div>
+//           ))}
 //         </div>
 //       </section>
 
 //       {/* How It Works */}
-//       <section className="bg-gray-50 py-16">
-//         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-//           <h2 className="text-3xl font-bold text-gray-800 mb-12">
+//       <section className="border-t border-gray-200 py-20">
+//         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+//           <h2 className="text-3xl font-semibold text-gray-900 text-center mb-14">
 //             How It Works
 //           </h2>
-//           <div className="grid grid-cols-1 sm:grid-cols-4 gap-8">
+
+//           <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 text-center">
 //             {[
-//               { step: "Step 1", title: "Upload Docs" },
-//               { step: "Step 2", title: "AI Scans & Scores" },
-//               { step: "Step 3", title: "Generate Report" },
-//               { step: "Step 4", title: "Stay Audit Ready" },
+//               { step: "01", title: "Upload Documents" },
+//               { step: "02", title: "AI Reviews & Scores" },
+//               { step: "03", title: "Generate Reports" },
+//               { step: "04", title: "Maintain Compliance" },
 //             ].map((item) => (
 //               <div
 //                 key={item.step}
-//                 className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition"
+//                 className="bg-white p-6 rounded-xl border border-gray-200 hover:shadow-sm transition"
 //               >
-//                 <div className="text-blue-600 font-bold text-lg mb-2">
-//                   {item.step}
+//                 <div className="text-sm font-semibold text-[#5FA8D3] mb-3">
+//                   Step {item.step}
 //                 </div>
-//                 <div className="font-semibold text-gray-800">{item.title}</div>
+//                 <div className="font-medium text-gray-900">{item.title}</div>
 //               </div>
 //             ))}
 //           </div>
@@ -103,17 +102,154 @@
 //       </section>
 
 //       {/* CTA Section */}
-//       <section className="py-16 bg-blue-600 text-white text-center">
-//         <h2 className="text-3xl font-bold mb-4">Ready to Feel Audit-Safe?</h2>
-//         <p className="mb-6 text-lg">
-//           Start your 30-day pilot and see what ClinicGuard AI finds.
+//       <section className="border-t border-gray-200 py-20 text-center">
+//         <h2 className="text-3xl font-semibold text-gray-900 mb-4">
+//           Ready to Reduce Compliance Risk?
+//         </h2>
+//         <p className="max-w-xl mx-auto mb-8 text-gray-600 text-lg">
+//           Start a 30-day pilot and see how ClinicGuard AI identifies gaps,
+//           risks, and missing documentation.
 //         </p>
 //         <Link
 //           href="/upload"
-//           className="px-8 py-4 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
+//           className="inline-block px-8 py-4 bg-[#3B82A0] text-white font-semibold rounded-lg hover:bg-[#256B85] transition-colors"
 //         >
-//           Start Your Pilot
+//           Start 30-Day Pilot
 //         </Link>
+//       </section>
+//     </div>
+//   );
+// }
+
+// "use client";
+
+// import Link from "next/link";
+// // import Footer from "@/components/Footer";
+
+// export default function Home() {
+//   return (
+//     <div className="min-h-screen bg-white">
+//       {/* Hero */}
+//       <section className="pt-28 pb-24">
+//         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center">
+//           <div>
+//             <h1 className="text-4xl sm:text-5xl font-semibold text-gray-900 mb-6 tracking-tight">
+//               ClinicGuard AI
+//             </h1>
+//             <p className="text-gray-600 text-lg sm:text-xl mb-10 max-w-xl">
+//               AI-powered compliance software designed to help small clinics
+//               reduce risk, stay audit-ready, and save administrative time.
+//             </p>
+
+//             <div className="flex gap-4">
+//               <Link
+//                 href="/upload"
+//                 className="px-7 py-3 bg-[#3B82A0] text-white font-medium rounded-lg hover:bg-[#256B85]"
+//               >
+//                 Upload Documents
+//               </Link>
+//               <Link
+//                 href="/scan"
+//                 className="px-7 py-3 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200"
+//               >
+//                 View Dashboard
+//               </Link>
+//             </div>
+//           </div>
+
+//           {/* Placeholder for future product image */}
+//           <div className="hidden lg:block">
+//             <div className="aspect-[4/3] rounded-xl border border-gray-200 bg-gray-50 flex items-center justify-center text-gray-400 text-sm">
+//               Product preview
+//             </div>
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* Features */}
+//       <section className="py-20">
+//         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+//           <h2 className="text-3xl font-semibold text-gray-900 text-center mb-14">
+//             Built for Clinic Compliance
+//           </h2>
+
+//           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+//             {[
+//               {
+//                 title: "Document Analysis",
+//                 desc: "Automatically review clinic policies and procedures for compliance gaps.",
+//               },
+//               {
+//                 title: "HIPAA-Safe Guidance",
+//                 desc: "Get clear answers to compliance questions in plain language.",
+//               },
+//               {
+//                 title: "Audit Reports",
+//                 desc: "Generate structured, audit-ready compliance summaries.",
+//               },
+//               {
+//                 title: "Risk Alerts",
+//                 desc: "Identify high-risk issues early before they escalate.",
+//               },
+//             ].map((item) => (
+//               <div
+//                 key={item.title}
+//                 className="p-6 rounded-xl border border-gray-200"
+//               >
+//                 <h3 className="text-sm font-semibold text-[#5FA8D3] mb-2">
+//                   {item.title}
+//                 </h3>
+//                 <p className="text-sm text-gray-600 leading-relaxed">
+//                   {item.desc}
+//                 </p>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* How It Works */}
+//       <section className="py-20 bg-gray-50">
+//         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+//           <h2 className="text-3xl font-semibold text-gray-900 text-center mb-16">
+//             How It Works
+//           </h2>
+
+//           <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 text-center">
+//             {[
+//               "Upload clinic documents",
+//               "AI reviews & scores compliance",
+//               "Reports highlight gaps",
+//               "Stay audit-ready",
+//             ].map((text, i) => (
+//               <div key={i}>
+//                 <div className="mx-auto w-10 h-10 rounded-full bg-[#3B82A0] text-white flex items-center justify-center font-semibold mb-4">
+//                   {i + 1}
+//                 </div>
+//                 <p className="text-sm text-gray-700">{text}</p>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* CTA */}
+//       <section className="py-24">
+//         <div className="max-w-2xl mx-auto text-center px-4">
+//           <h2 className="text-3xl font-semibold text-gray-900 mb-4">
+//             Start With One Upload
+//           </h2>
+//           <p className="text-gray-600 mb-8">
+//             Upload a policy or procedure to see how ClinicGuard AI identifies
+//             compliance risks—no setup required.
+//           </p>
+//           <Link
+//             href="/upload"
+//             className="inline-block px-8 py-4 bg-[#3B82A0] text-white font-semibold rounded-lg hover:bg-[#256B85]"
+//           >
+//             Upload First Document
+//           </Link>
+//         </div>
 //       </section>
 //     </div>
 //   );
@@ -122,116 +258,132 @@
 "use client";
 
 import Link from "next/link";
+// import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-          <h1 className="text-4xl sm:text-5xl font-semibold text-gray-900 mb-4">
-            🏥 ClinicGuard AI
-          </h1>
-          <p className="text-gray-600 text-lg sm:text-xl mb-8">
-            Your 24/7 AI compliance officer for small clinics.
-          </p>
-          <div className="flex justify-center gap-4">
-            <Link
-              href="/upload"
-              className="px-6 py-3 bg-[#3B82A0] text-white font-medium rounded-lg hover:bg-[#256B85] transition-colors"
-            >
-              Upload Docs
-            </Link>
-            <Link
-              href="/scan"
-              className="px-6 py-3 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-colors"
-            >
-              View Dashboard
-            </Link>
+      {/* Hero */}
+      <section className="pt-28 pb-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <h1 className="text-4xl sm:text-5xl font-semibold text-gray-900 mb-6 tracking-tight">
+              ClinicGuard AI
+            </h1>
+            <p className="text-gray-600 text-lg sm:text-xl mb-10 max-w-xl">
+              AI-powered compliance software designed to help small clinics
+              reduce risk, stay audit-ready, and save administrative time.
+            </p>
+
+            <div className="flex gap-4">
+              <Link
+                href="/upload"
+                className="px-7 py-3 bg-[#3B82A0] text-white font-medium rounded-lg hover:bg-[#256B85] transition"
+              >
+                Upload Documents
+              </Link>
+              <Link
+                href="/scan"
+                className="px-7 py-3 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition"
+              >
+                View Dashboard
+              </Link>
+            </div>
+          </div>
+
+          {/* Product preview placeholder */}
+          <div className="hidden lg:block">
+            <div className="aspect-[4/3] rounded-xl border border-gray-200 bg-gray-50 flex items-center justify-center text-gray-400 text-sm">
+              Product preview
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h2 className="text-3xl font-semibold text-gray-900 text-center mb-12">
-          What ClinicGuard AI Helps With
-        </h2>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {[
-            {
-              title: "📄 Document Upload & Scan",
-              desc: "Upload your clinic policies and procedures. Get instant compliance scoring.",
-            },
-            {
-              title: "💬 HIPAA Q&A Chat",
-              desc: "Ask questions like “Can I email this patient?” and get clear, compliant answers.",
-            },
-            {
-              title: "📊 Audit-Ready Reports",
-              desc: "Generate reports that highlight risks, gaps, and missing documentation.",
-            },
-            {
-              title: "⚠️ Red Flag Alerts",
-              desc: "Get notified about high-risk compliance issues before they become fines.",
-            },
-          ].map((item) => (
-            <div
-              key={item.title}
-              className="bg-white p-6 rounded-xl border border-gray-200 hover:shadow-md transition"
-            >
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                {item.title}
-              </h3>
-              <p className="text-gray-600 text-sm">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section className="bg-white border-t border-gray-200 py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-semibold text-gray-900 mb-12">
-            How It Works
+      {/* Features */}
+      <section className="py-20 bg-[#F5FAFD]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-semibold text-gray-900 text-center mb-14">
+            Built for Clinic Compliance
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { step: "Step 1", title: "Upload Documents" },
-              { step: "Step 2", title: "AI Scans & Scores" },
-              { step: "Step 3", title: "Generate Reports" },
-              { step: "Step 4", title: "Stay Audit-Ready" },
+              {
+                title: "Document Analysis",
+                desc: "Automatically review clinic policies and procedures for compliance gaps.",
+              },
+              {
+                title: "HIPAA-Safe Guidance",
+                desc: "Get clear answers to compliance questions in plain language.",
+              },
+              {
+                title: "Audit Reports",
+                desc: "Generate structured, audit-ready compliance summaries.",
+              },
+              {
+                title: "Risk Alerts",
+                desc: "Identify high-risk issues early before they escalate.",
+              },
             ].map((item) => (
               <div
-                key={item.step}
-                className="bg-white p-6 rounded-xl border border-gray-200 hover:shadow-md transition"
+                key={item.title}
+                className="bg-white p-6 rounded-xl border border-gray-200"
               >
-                <div className="text-sm font-semibold text-[#5FA8D3] mb-2">
-                  {item.step}
-                </div>
-                <div className="font-medium text-gray-900">{item.title}</div>
+                <h3 className="text-sm font-semibold text-[#3B82A0] mb-2">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  {item.desc}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 bg-white border-t border-gray-200 text-center">
-        <h2 className="text-3xl font-semibold text-gray-900 mb-4">
-          Ready to Feel Audit-Safe?
-        </h2>
-        <p className="mb-6 text-gray-600 text-lg">
-          Start your 30-day pilot and see what ClinicGuard AI uncovers.
-        </p>
-        <Link
-          href="/upload"
-          className="inline-block px-8 py-4 bg-[#3B82A0] text-white font-semibold rounded-lg hover:bg-[#256B85] transition-colors"
-        >
-          Start Your Pilot
-        </Link>
+      {/* How It Works */}
+      <section className="py-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-semibold text-gray-900 text-center mb-16">
+            How It Works
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-10 text-center">
+            {[
+              "Upload clinic documents",
+              "AI reviews & scores compliance",
+              "Reports highlight gaps",
+              "Stay audit-ready",
+            ].map((text, i) => (
+              <div key={i}>
+                <div className="mx-auto w-10 h-10 rounded-full bg-[#3B82A0]/90 text-white flex items-center justify-center font-semibold mb-4">
+                  {i + 1}
+                </div>
+                <p className="text-sm text-gray-700">{text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-24 bg-[#F5FAFD]">
+        <div className="max-w-2xl mx-auto text-center px-4">
+          <h2 className="text-3xl font-semibold text-gray-900 mb-4">
+            Start With One Upload
+          </h2>
+          <p className="text-gray-600 mb-8">
+            Upload a policy or procedure to see how ClinicGuard AI identifies
+            compliance risks—no setup required.
+          </p>
+          <Link
+            href="/upload"
+            className="inline-block px-8 py-4 bg-[#3B82A0] text-white font-semibold rounded-lg hover:bg-[#256B85] transition"
+          >
+            Upload First Document
+          </Link>
+        </div>
       </section>
     </div>
   );

@@ -4,28 +4,27 @@ import { useState } from "react";
 
 export default function UploadPage() {
   const [files, setFiles] = useState<File[]>([]);
-
-  // Dummy existing documents
-  const existingDocs = [
+  const [existingDocs, setExistingDocs] = useState([
     {
       id: 1,
-      name: "Clinic Policy Manual.pdf",
+      name: "Clinic_Policy_2023.pdf",
       uploadedAt: "Jan 10, 2026",
       status: "Scanned",
     },
     {
       id: 2,
-      name: "Patient Privacy Guidelines.docx",
+      name: "Employee_Handbook.docx",
       uploadedAt: "Jan 9, 2026",
       status: "Pending",
     },
     {
       id: 3,
-      name: "Staff Training Procedures.pdf",
-      uploadedAt: "Jan 5, 2026",
+      name: "Safety_Protocol.pdf",
+      uploadedAt: "Jan 8, 2026",
       status: "Scanned",
     },
-  ];
+  ]);
+  const [docToDelete, setDocToDelete] = useState<number | null>(null);
 
   const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -34,6 +33,22 @@ export default function UploadPage() {
 
   const removeFile = (index: number) => {
     setFiles(files.filter((_, i) => i !== index));
+  };
+
+  const confirmDeleteDoc = (id: number) => {
+    setDocToDelete(id);
+  };
+
+  const deleteDoc = () => {
+    if (docToDelete !== null) {
+      setExistingDocs(existingDocs.filter((doc) => doc.id !== docToDelete));
+      setDocToDelete(null);
+    }
+  };
+
+  const viewDoc = (docName: string) => {
+    // For now we just alert, later replace with actual file URL
+    alert(`Open or download ${docName}`);
   };
 
   return (
@@ -93,27 +108,68 @@ export default function UploadPage() {
         )}
 
         {/* Existing Documents */}
-        <div className="mt-16">
-          <h2 className="text-sm font-semibold text-gray-900 mb-3">
-            Previously Uploaded Documents
-          </h2>
-          <div className="bg-gray-50 border border-gray-200 rounded-xl divide-y">
-            {existingDocs.map((doc) => (
-              <div
-                key={doc.id}
-                className="flex justify-between items-center px-4 py-3 text-sm"
-              >
-                <div>
-                  <div className="text-gray-800 font-medium">{doc.name}</div>
-                  <div className="text-gray-400 text-xs">
-                    Uploaded {doc.uploadedAt}
+        {existingDocs.length > 0 && (
+          <div className="mt-16">
+            <h2 className="text-sm font-semibold text-gray-900 mb-4">
+              Previously Uploaded Documents
+            </h2>
+            <div className="bg-gray-50 border border-gray-200 rounded-xl divide-y">
+              {existingDocs.map((doc) => (
+                <div
+                  key={doc.id}
+                  className="flex justify-between items-center px-4 py-3 text-sm hover:bg-gray-100 transition-colors rounded-md"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="text-gray-400 text-lg">
+                      {doc.name.endsWith(".pdf")
+                        ? "📄"
+                        : doc.name.endsWith(".docx")
+                          ? "📝"
+                          : "📁"}
+                    </div>
+                    <div>
+                      <div className="text-gray-800 font-medium">
+                        {doc.name}
+                      </div>
+                      <div className="text-gray-400 text-xs">
+                        Uploaded {doc.uploadedAt}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-4">
+                    <span
+                      className={`px-2 py-1 text-xs rounded-full font-semibold transition-colors ${
+                        doc.status === "Scanned"
+                          ? "bg-green-100 text-green-800"
+                          : doc.status === "Pending"
+                            ? "bg-yellow-100 text-yellow-800"
+                            : "bg-gray-100 text-gray-700"
+                      }`}
+                    >
+                      {doc.status}
+                    </span>
+
+                    <button
+                      onClick={() => viewDoc(doc.name)}
+                      className="text-sm text-[#3B82A0] font-semibold hover:underline transition-colors"
+                    >
+                      View
+                    </button>
+
+                    <button
+                      onClick={() => confirmDeleteDoc(doc.id)}
+                      className="text-red-500 hover:text-red-700 transition-colors"
+                      aria-label="Delete document"
+                    >
+                      🗑️
+                    </button>
                   </div>
                 </div>
-                <span className="text-xs text-gray-500">{doc.status}</span>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* CTA Button */}
         <button
@@ -133,6 +189,33 @@ export default function UploadPage() {
           compliance gaps. No patient PHI is required.
         </p>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {docToDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white rounded-xl p-6 max-w-sm w-full text-center">
+            <h3 className="text-lg font-semibold mb-4">Confirm Delete</h3>
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to delete this document? This action cannot
+              be undone.
+            </p>
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={() => setDocToDelete(null)}
+                className="px-4 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={deleteDoc}
+                className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-colors"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

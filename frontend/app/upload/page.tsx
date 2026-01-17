@@ -1,30 +1,71 @@
 "use client";
 
 import { useState } from "react";
+import { uploadDocument, fetchDocuments } from "@/lib/api";
+import { useEffect } from "react";
 
 export default function UploadPage() {
   const [files, setFiles] = useState<File[]>([]);
-  const [existingDocs, setExistingDocs] = useState([
-    {
-      id: 1,
-      name: "Clinic_Policy_2023.pdf",
-      uploadedAt: "Jan 10, 2026",
-      status: "Scanned",
-    },
-    {
-      id: 2,
-      name: "Employee_Handbook.docx",
-      uploadedAt: "Jan 9, 2026",
-      status: "Pending",
-    },
-    {
-      id: 3,
-      name: "Safety_Protocol.pdf",
-      uploadedAt: "Jan 8, 2026",
-      status: "Scanned",
-    },
-  ]);
+  // const [existingDocs, setExistingDocs] = useState([
+  //   {
+  //     id: 1,
+  //     name: "Clinic_Policy_2023.pdf",
+  //     uploadedAt: "Jan 10, 2026",
+  //     status: "Scanned",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Employee_Handbook.docx",
+  //     uploadedAt: "Jan 9, 2026",
+  //     status: "Pending",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Safety_Protocol.pdf",
+  //     uploadedAt: "Jan 8, 2026",
+  //     status: "Scanned",
+  //   },
+  // ]);
+  const [existingDocs, setExistingDocs] = useState<any[]>([]);
+
   const [docToDelete, setDocToDelete] = useState<number | null>(null);
+
+  const CLINIC_ID = "demo_clinic_123";
+
+  useEffect(() => {
+    const loadDocs = async () => {
+      const docs = await fetchDocuments(CLINIC_ID);
+      setExistingDocs(docs);
+    };
+
+    loadDocs();
+  }, []);
+
+  const uploadFiles = async () => {
+    try {
+      for (const file of files) {
+        const res = await uploadDocument(file, CLINIC_ID);
+
+        setExistingDocs((prev) => [
+          {
+            document_id: res.document.document_id,
+            filename: res.document.filename,
+            uploaded_at: res.document.uploaded_at,
+            status: "Pending", // until scan completes
+          },
+          ...prev,
+        ]);
+      }
+
+      // Clear upload box
+      setFiles([]);
+      const docs = await fetchDocuments(CLINIC_ID);
+      setExistingDocs(docs);
+    } catch (err) {
+      console.error(err);
+      alert("One or more files failed to upload");
+    }
+  };
 
   const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -107,6 +148,18 @@ export default function UploadPage() {
           </div>
         )}
 
+        <button
+          disabled={files.length === 0}
+          onClick={uploadFiles}
+          className={`mt-8 w-full py-3 rounded-lg font-semibold text-white transition-colors ${
+            files.length === 0
+              ? "bg-gray-300 cursor-not-allowed"
+              : "bg-[#3B82A0] hover:bg-[#256B85]"
+          }`}
+        >
+          Upload Documents
+        </button>
+
         {/* Existing Documents */}
         {existingDocs.length > 0 && (
           <div className="mt-16">
@@ -116,23 +169,24 @@ export default function UploadPage() {
             <div className="bg-gray-50 border border-gray-200 rounded-xl divide-y">
               {existingDocs.map((doc) => (
                 <div
-                  key={doc.id}
+                  key={doc.document_id}
                   className="flex justify-between items-center px-4 py-3 text-sm hover:bg-gray-100 transition-colors rounded-md"
                 >
                   <div className="flex items-center gap-3">
                     <div className="text-gray-400 text-lg">
-                      {doc.name.endsWith(".pdf")
+                      {doc.filename.endsWith(".pdf")
                         ? "📄"
-                        : doc.name.endsWith(".docx")
+                        : doc.filename.endsWith(".docx")
                           ? "📝"
                           : "📁"}
                     </div>
                     <div>
                       <div className="text-gray-800 font-medium">
-                        {doc.name}
+                        {doc.filename}
                       </div>
                       <div className="text-gray-400 text-xs">
-                        Uploaded {doc.uploadedAt}
+                        Uploaded{" "}
+                        {new Date(doc.uploaded_at).toLocaleDateString()}
                       </div>
                     </div>
                   </div>
@@ -151,7 +205,7 @@ export default function UploadPage() {
                     </span>
 
                     <button
-                      onClick={() => viewDoc(doc.name)}
+                      onClick={() => viewDoc(doc.filename)}
                       className="text-sm text-[#3B82A0] font-semibold hover:underline transition-colors"
                     >
                       View

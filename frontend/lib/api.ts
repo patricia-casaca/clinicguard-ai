@@ -28,3 +28,35 @@ export async function uploadDocument(file: File, clinicId: string) {
 
   return res.json();
 }
+
+export async function deleteDocument(documentId: string) {
+  const res = await fetch(`${API_URL}/documents/${documentId}`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) {
+    throw new Error("Delete failed");
+  }
+
+  return res.json();
+}
+
+export async function replaceDocument(documentId: string, file: File) {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const res = await fetch(`${API_URL}/documents/${documentId}/replace`, {
+    method: "PUT",
+    body: formData,
+  });
+
+  if (!res.ok) {
+    throw new Error("Replace failed");
+  }
+
+  return res.json();
+}
+
+export function viewDocument(documentId: string) {
+  window.open(`${API_URL}/documents/${documentId}/view`, "_blank");
+}

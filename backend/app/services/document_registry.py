@@ -30,3 +30,19 @@ def update_status(document_id: str, status: str):
             d["status"] = status
             break
     save_registry(docs)
+
+def delete_document(document_id: str):
+    docs = load_registry()
+    updated_docs = [d for d in docs if d["document_id"] != document_id]
+    save_registry(updated_docs)
+
+def replace_document(document_id: str, new_file_path: str, new_filename: str):
+    docs = load_registry()
+    for d in docs:
+        if d["document_id"] == document_id:
+            d["file_path"] = new_file_path
+            d["filename"] = new_filename
+            d["status"] = "Not Scanned"
+            d["uploaded_at"] = datetime.utcnow().isoformat()
+            break
+    save_registry(docs)

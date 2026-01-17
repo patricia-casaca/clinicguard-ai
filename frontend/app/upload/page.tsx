@@ -1,34 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { uploadDocument, fetchDocuments } from "@/lib/api";
+import {
+  uploadDocument,
+  fetchDocuments,
+  deleteDocument,
+  replaceDocument,
+  viewDocument,
+} from "@/lib/api";
 import { useEffect } from "react";
 
 export default function UploadPage() {
   const [files, setFiles] = useState<File[]>([]);
-  // const [existingDocs, setExistingDocs] = useState([
-  //   {
-  //     id: 1,
-  //     name: "Clinic_Policy_2023.pdf",
-  //     uploadedAt: "Jan 10, 2026",
-  //     status: "Scanned",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Employee_Handbook.docx",
-  //     uploadedAt: "Jan 9, 2026",
-  //     status: "Pending",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Safety_Protocol.pdf",
-  //     uploadedAt: "Jan 8, 2026",
-  //     status: "Scanned",
-  //   },
-  // ]);
   const [existingDocs, setExistingDocs] = useState<any[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
 
-  const [docToDelete, setDocToDelete] = useState<number | null>(null);
+  const [docToDelete, setDocToDelete] = useState<string | null>(null);
 
   const CLINIC_ID = "demo_clinic_123";
 
@@ -43,6 +30,7 @@ export default function UploadPage() {
 
   const uploadFiles = async () => {
     try {
+      setIsUploading(true);
       for (const file of files) {
         const res = await uploadDocument(file, CLINIC_ID);
 
@@ -64,6 +52,8 @@ export default function UploadPage() {
     } catch (err) {
       console.error(err);
       alert("One or more files failed to upload");
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -76,20 +66,29 @@ export default function UploadPage() {
     setFiles(files.filter((_, i) => i !== index));
   };
 
-  const confirmDeleteDoc = (id: number) => {
+  const confirmDeleteDoc = (id: string) => {
     setDocToDelete(id);
   };
 
-  const deleteDoc = () => {
-    if (docToDelete !== null) {
-      setExistingDocs(existingDocs.filter((doc) => doc.id !== docToDelete));
+  const deleteDoc = async () => {
+    if (!docToDelete) return;
+
+    try {
+      await deleteDocument(docToDelete);
+
+      setExistingDocs((prev) =>
+        prev.filter((doc) => doc.document_id !== docToDelete)
+      );
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete document");
+    } finally {
       setDocToDelete(null);
     }
   };
 
-  const viewDoc = (docName: string) => {
-    // For now we just alert, later replace with actual file URL
-    alert(`Open or download ${docName}`);
+  const viewDoc = (documentId: string) => {
+    viewDocument(documentId);
   };
 
   return (
@@ -103,7 +102,13 @@ export default function UploadPage() {
         </p>
 
         {/* Drag & Drop / File Upload */}
-        <div className="border-2 border-dashed border-gray-300 rounded-xl p-12 text-center cursor-pointer hover:border-[#5FA8D3] transition-colors">
+        <div
+          className={`border-2 border-dashed border-gray-300 rounded-xl p-12 text-center transition-colors ${
+            isUploading
+              ? "pointer-events-none opacity-60"
+              : "cursor-pointer hover:border-[#5FA8D3]"
+          }`}
+        >
           <label className="cursor-pointer">
             <input
               type="file"
@@ -149,15 +154,15 @@ export default function UploadPage() {
         )}
 
         <button
-          disabled={files.length === 0}
+          disabled={files.length === 0 || isUploading}
           onClick={uploadFiles}
           className={`mt-8 w-full py-3 rounded-lg font-semibold text-white transition-colors ${
-            files.length === 0
+            files.length === 0 || isUploading
               ? "bg-gray-300 cursor-not-allowed"
               : "bg-[#3B82A0] hover:bg-[#256B85]"
           }`}
         >
-          Upload Documents
+          {isUploading ? "Uploading…" : "Upload Documents"}
         </button>
 
         {/* Existing Documents */}
@@ -196,7 +201,7 @@ export default function UploadPage() {
                       className={`px-2 py-1 text-xs rounded-full font-semibold transition-colors ${
                         doc.status === "Scanned"
                           ? "bg-green-100 text-green-800"
-                          : doc.status === "Pending"
+                          : doc.status === "Not Scanned"
                             ? "bg-yellow-100 text-yellow-800"
                             : "bg-gray-100 text-gray-700"
                       }`}
@@ -205,14 +210,41 @@ export default function UploadPage() {
                     </span>
 
                     <button
-                      onClick={() => viewDoc(doc.filename)}
+                      onClick={() => viewDoc(doc.document_id)}
                       className="text-sm text-[#3B82A0] font-semibold hover:underline transition-colors"
                     >
                       View
                     </button>
 
+                    {/* REPLACE */}
+                    <label className="text-sm text-gray-600 hover:text-gray-800 cursor-pointer">
+                      Replace
+                      <input
+                        type="file"
+                        className="hidden"
+                        onChange={async (e) => {
+                          if (!e.target.files?.[0]) return;
+
+                          try {
+                            setIsUploading(true);
+                            await replaceDocument(
+                              doc.document_id,
+                              e.target.files[0]
+                            );
+                            const docs = await fetchDocuments(CLINIC_ID);
+                            setExistingDocs(docs);
+                          } catch (err) {
+                            alert("Replace failed");
+                          } finally {
+                            setIsUploading(false);
+                            e.target.value = ""; // reset input so same file can be reselected
+                          }
+                        }}
+                      />
+                    </label>
+
                     <button
-                      onClick={() => confirmDeleteDoc(doc.id)}
+                      onClick={() => confirmDeleteDoc(doc.document_id)}
                       className="text-red-500 hover:text-red-700 transition-colors"
                       aria-label="Delete document"
                     >
@@ -225,11 +257,14 @@ export default function UploadPage() {
           </div>
         )}
 
-        {/* CTA Button */}
         <button
-          disabled={files.length === 0}
+          disabled={
+            existingDocs.length === 0 || // disable if no documents exist
+            existingDocs.every((doc) => doc.status === "Scanned") // disable if all docs scanned
+          }
           className={`mt-8 w-full py-3 rounded-lg font-semibold text-white transition-colors ${
-            files.length === 0
+            existingDocs.length === 0 ||
+            existingDocs.every((doc) => doc.status === "Scanned")
               ? "bg-gray-300 cursor-not-allowed"
               : "bg-[#3B82A0] hover:bg-[#256B85]"
           }`}

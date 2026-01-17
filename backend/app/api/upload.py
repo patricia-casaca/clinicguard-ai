@@ -13,18 +13,19 @@ async def upload_document(
     clinic_id: str = Form(...),
     file: UploadFile = File(...)
 ):
-    file_path = await save_uploaded_file(file)
+    file_path = await save_uploaded_file(file, clinic_id)
     document_id = str(uuid.uuid4())
 
-    nodes = load_and_chunk(file_path, clinic_id, document_id)
-    get_or_create_index(clinic_id, nodes)
+    # nodes = load_and_chunk(file_path, clinic_id, document_id)
+    # get_or_create_index(clinic_id, nodes)
 
     document = {
         "document_id": document_id,
         "clinic_id": clinic_id,
         "filename": file.filename,
+        "file_path": file_path,
         "uploaded_at": datetime.utcnow().isoformat(),
-        "status": "Scanned",
+        "status": "Not Scanned",
     }
 
     add_document(document)
